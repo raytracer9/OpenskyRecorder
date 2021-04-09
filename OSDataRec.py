@@ -52,7 +52,6 @@ def initDB():
                     position_source integer,
                     PRIMARY KEY (time_state, icao24)
                     )
-
                     """)
 
 def getStatesJSON(timestamp:int = floor(time())):
@@ -68,7 +67,6 @@ def getStatesJSON(timestamp:int = floor(time())):
 def saveDataToDB(jsonResponse:dict):
     stateTime = jsonResponse['time']
     states = jsonResponse['states']
-    # states = [str(i) for i in states if type(i) == list]
     for i in range(len(states)): # convert the inner list to string. List is a invalid Datatype for DB.
         for l in range(len(states[i])):
             if (type(states[i][l]) == list):
@@ -79,7 +77,6 @@ def saveDataToDB(jsonResponse:dict):
     except sqlite3.IntegrityError as ex:
         log.warning (ex)
         rQueue.remove(stateTime)
-
 
 def genQueue():
     cur.execute("SELECT DISTINCT time_state FROM states ORDER BY time_state DESC LIMIT 360") # get the 360 newest timecodes
@@ -104,23 +101,23 @@ if __name__ == "__main__":
     dbLocation = "./data.db"
     timeInterval = 60 # n secods between requests
 
-    # API
+    # API Config
     username = logindata['username']
     password = logindata['password']
-    apiURL = f"https://{username}:{password}@opensky-network.org/api"
+    apiURL = f"https://{username}:{password}@opensky-network.org/api" # Use this for usage with account
+    # apiURL = f"https://opensky-network.org/api" # Use this for usage without account
 
-    
+    # Initialize Database
     initDB()
 
     # Mainloop
     while True:
         try:
-            rQueue = genQueue()
+            rQueue = genQueue() # Update Queue in every iteration
             for timeCode in rQueue:
                 log.info(f"working on {timeCode}")
                 saveDataToDB(getStatesJSON(timeCode))
             
-
         except KeyboardInterrupt:
             log.warning("KeyboardInterrupt. Closing Program")
             break
@@ -130,5 +127,5 @@ if __name__ == "__main__":
             log.error ("Exception occurred. Retry in 4 seconds")
             sleep(4)
         
-    con.close()
+    con.close() # close Database after KeyboardInterrupt
     log.info("Database closed")
