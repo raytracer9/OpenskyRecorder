@@ -4,7 +4,7 @@ import json
 from sqlite3.dbapi2 import IntegrityError
 import requests
 from time import time, sleep
-from math import floor
+from math import floor, ciel
 import sqlite3
 import logging
 
@@ -117,6 +117,8 @@ if __name__ == "__main__":
             for timeCode in rQueue:
                 log.info(f"working on {timeCode}")
                 saveDataToDB(getStatesJSON(timeCode))
+            log.info(f"Queue is empty, waiting {10} seconds")
+            sleep(10)
             
         except KeyboardInterrupt:
             log.warning("KeyboardInterrupt. Closing Program")
