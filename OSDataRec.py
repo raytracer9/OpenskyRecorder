@@ -83,7 +83,9 @@ def genQueue():
     latestInDB = set(i[0] for i in cur.fetchall())
     lastValidTimeStamp = floor(time()/timeInterval)*timeInterval
     lastHour = set([ lastValidTimeStamp-i for i in range(0,3600,timeInterval) ])
-    return lastHour - latestInDB
+    outQueue = lastHour - latestInDB
+    log.debug(f"Current Queue Length is {len(outQueue)}")
+    return outQueue
 
 if __name__ == "__main__":
     # Logging Parms
