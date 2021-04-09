@@ -24,3 +24,6 @@ This is a simple Python script to calls the OpenSky REST API and store the recie
   - Rename it to '.logindata.json'
 4. (optional) Set a timeinterval for getting data. It is set as 'timeInterval' under '# General Params' inside 'OSDataRec.py'
 5. Start 'OSDataRec.py' with python 3
+
+### Licence
+This Software is released AS IS under the MIT License
