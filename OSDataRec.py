@@ -4,7 +4,7 @@ import json
 from sqlite3.dbapi2 import IntegrityError
 import requests
 from time import time, sleep
-from math import floor, ciel
+from math import floor
 import sqlite3
 import logging
 
