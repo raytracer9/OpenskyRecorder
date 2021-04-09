@@ -99,7 +99,7 @@ if __name__ == "__main__":
     
     # General Params
     dbLocation = "./data.db"
-    timeInterval = 60 # n secods between requests
+    timeInterval = 30 # n secods between requests
 
     # API Config
     username = logindata['username']
