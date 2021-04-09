@@ -89,7 +89,7 @@ def genQueue():
     return lastHour - latestInDB
 
 if __name__ == "__main__":
-    # General Params
+    # Logging Parms
     logging.basicConfig(filename='logfile.log', encoding='utf-8', level=logging.DEBUG, format="%(asctime)s - %(levelname)s - %(message)s")
     log = logging.getLogger()
     log.setLevel(logging.DEBUG)
@@ -100,6 +100,7 @@ if __name__ == "__main__":
     log.addHandler(log_file_handler)
     log.addHandler(log_stdout_handler)
     
+    # General Params
     dbLocation = "./data.db"
     timeInterval = 60 # n secods between requests
 
